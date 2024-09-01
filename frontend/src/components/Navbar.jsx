@@ -17,6 +17,10 @@ const Navbar = () => {
     navigate('/auth');
     
   }
+  const handleProfile=()=>{
+    navigate('/me');
+    
+  }
 
 
   return (
@@ -28,7 +32,7 @@ const Navbar = () => {
       <HStack gap='20px'>
         <Button>BD</Button>
         <Text>blogdaily@gmail.com</Text>
-        <CgProfile size="30px" />
+        <CgProfile size="30px" onClick={handleProfile}/>
         <Button onClick={handleNavigate}>Login</Button>
         
 

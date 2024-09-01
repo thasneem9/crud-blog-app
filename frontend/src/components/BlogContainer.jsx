@@ -11,7 +11,7 @@ const BlogContainer = () => {
      
        
        
-     <Flex  bg="blue.100" flexBasis="1200px" wrap={"wrap"}>
+     <Flex  bg="blue.100"  wrap={"wrap"}>
      <BlogCard/>
      <BlogCard/>
      <BlogCard/>
