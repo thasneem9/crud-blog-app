@@ -14,12 +14,24 @@ const createPost=async(req,res)=>{
     const author=dataReceived.author
     const postedBy=dataReceived.author
     try {
+        const token = req.cookies.jwt;
+        console.log("postttttttt token",token)
+        if (!token) {
+            return res.status(401).json({ error: "Unauthorized" });
+        }
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+        const userId = decodedToken.userId;
+
+        console.log("Decoded Token:", decodedToken);
+
+        console.log("Decoded User ID:", userId);
+
         console.log("title,contnet:",title,content)
         const newPost= await Post.create({
             title:title,
             text:content,
             author:author,
-            postedBy:1
+            postedBy:userId
 
         })
         res.status(200).json({ message: "post creation successful",data:newPost });

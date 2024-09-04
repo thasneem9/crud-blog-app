@@ -46,14 +46,17 @@ try {
 const login= async (req,res)=>{
     const username=req.body.username;
     const password=req.body.password;
+
  
     try {
        //get password from db
        console.log("RECEIVED USERNAME:",username)
        console.log("Received body:", req.body);
+
+      
        const user= await User.findOne({
         where:{username:username},
-        attributes:['password']//select only password
+        attributes:['password','id']//select only password and id
        })
        
        const isMatch = await bcrypt.compare(password, user.password);
@@ -61,6 +64,7 @@ const login= async (req,res)=>{
         let token;
         try {
            token=generateTokenAndSetCookie(user.id, res);
+       //works console.log("+++++++++++",user.id)
         } catch (error) {
             console.error("Error in token generation:", error);
             return res.status(500).json({ error: "Token generation failed" });
