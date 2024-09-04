@@ -46,6 +46,7 @@ try {
 const login= async (req,res)=>{
     const username=req.body.username;
     const password=req.body.password;
+ 
     try {
        //get password from db
        console.log("RECEIVED USERNAME:",username)
@@ -65,7 +66,7 @@ const login= async (req,res)=>{
             return res.status(500).json({ error: "Token generation failed" });
         }
         
-        res.status(200).json({message:"login sucesful",username:user.username,isMatch:isMatch,token:token})
+        res.status(200).json({message:"login sucesful",username:username,isMatch:isMatch,token:token})
         
        }else{
         res.status(400).json({error:"incorect credentials"})

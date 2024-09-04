@@ -1,14 +1,11 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../db/database.js';
+import sequelize from '../database/database.js';
 
 import Sequelize from 'sequelize';
 
 
-const Post = sequelize.define('User', {
-    postId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
+const Post = sequelize.define('Post', {
+   
     author:{
       type:DataTypes.STRING,
       allowNull:false

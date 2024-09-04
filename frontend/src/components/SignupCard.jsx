@@ -20,6 +20,8 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import authScreenAtom from './atoms/authScreenAtom.js'
 import { useRecoilState } from 'recoil'
 import { useAuth } from './context/AuthContext.jsx'
+import { useRecoilValue } from 'recoil'
+import userAtom from './atoms/userAtom.js'
 
 export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false)
@@ -27,10 +29,14 @@ export default function SignupCard() {
  const [name,setName]=useState('')
  const [email,setEmail]=useState('')
  const [password,setPassword]=useState('')
+
   const userInfo={username,password,email,name}
   const [authScreen,setAuthScreen]=useRecoilState(authScreenAtom)
   const { setIsAuthenticated } = useAuth();
   
+  const user = useRecoilValue(userAtom);
+
+
   
 
   const handleSignup=async ()=>{
@@ -49,6 +55,11 @@ export default function SignupCard() {
       const data= await res.json()
 console.log("data recived:",data)
 setIsAuthenticated(true);
+//this is for posts,to get author, we need it:
+localStorage.setItem("user-blog",JSON.stringify(data))
+
+console.log("++++",user)
+console.log("++++",user.data.name)
 
 
       

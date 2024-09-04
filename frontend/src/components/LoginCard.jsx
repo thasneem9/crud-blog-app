@@ -19,7 +19,8 @@ import { useRecoilState } from 'recoil'
 import {  useState } from 'react'
 import authScreenAtom from './atoms/authScreenAtom.js'
 import { useAuth } from './context/AuthContext.jsx'
-
+import { useRecoilValue } from 'recoil'
+import userAtom from './atoms/userAtom.js'
 
 export default function LoginCard() {
 
@@ -29,7 +30,7 @@ export default function LoginCard() {
   const [authScreen,setAuthScreen]=useRecoilState(authScreenAtom)
   const { setIsAuthenticated } = useAuth();
 
-  
+  const user = useRecoilValue(userAtom);
 
   const handleSubmit=async ()=>{
 
@@ -46,6 +47,9 @@ const data= await res.json()
   
   
     setIsAuthenticated(true);
+    localStorage.setItem("user-blog",JSON.stringify(data))
+
+
   
 
   

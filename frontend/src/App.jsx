@@ -14,7 +14,7 @@ function App() {
    
 
     <Routes>
-    <Route path='/' element={<BlogContainer/>}/>
+    <Route path='/' element={ isAuthenticated?<BlogContainer/>:<AuthPage/>}/>
 
     <Route path='/auth' element={<AuthPage/>}/>
     <Route path='/me' element={<Me/>}/>
