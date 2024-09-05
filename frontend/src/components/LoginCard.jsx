@@ -47,6 +47,8 @@ const data= await res.json()
   
   
     setIsAuthenticated(true);
+       // Persist authentication status in localStorage
+       localStorage.setItem('isAuthenticated', 'true');
     localStorage.setItem("user-blog",JSON.stringify(data))
 
 
