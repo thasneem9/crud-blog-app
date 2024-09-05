@@ -19,6 +19,7 @@ useEffect(()=>{
       })
       const data= await res.json()
       console.log(data)
+      setPosts(data)
       
     } catch (error) {
       console.error("error in fetching posts",error)
@@ -38,12 +39,21 @@ getFeed()
        
        
      <Flex  bg=""  wrap={"wrap"}>
-     <BlogCard/>
-     <BlogCard/>
-     <BlogCard/>
-     <BlogCard/>
-     <BlogCard/>
-     <BlogCard/>
+   
+     {posts?.length>0?(
+      posts.map((post)=>(
+      <BlogCard 
+      key={post.id}
+       author={post.author} 
+       text={post.text} 
+       img={post.img} 
+       postedBy={post.postedBy} 
+       updatedAt={post.updatedAt}
+       />
+       ))
+       ):(
+       <p>No posts awvilble</p>
+       )}
      </Flex>
        
    

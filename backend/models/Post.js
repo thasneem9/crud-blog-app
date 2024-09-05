@@ -11,6 +11,11 @@ const Post = sequelize.define('Post', {
       allowNull:false
 
     }, 
+    title:{
+      type:DataTypes.STRING,
+      allowNull:false
+
+    }, 
     text:{
       type:DataTypes.STRING,
       allowNull:false
