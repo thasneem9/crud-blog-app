@@ -3,6 +3,8 @@ import { Flex, HStack ,Box, Avatar,Text} from '@chakra-ui/react'
 
 
 const BlogCard = () => {
+
+  
   return (
           <>
     

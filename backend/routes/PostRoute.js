@@ -1,10 +1,10 @@
 import express from 'express'
-import { createPost} from '../controller/postController.js';
+import { createPost, getFeed} from '../controller/postController.js';
 
 
 const router=express.Router();
 
-
+router.get("/getFeed",getFeed)
 router.post("/createPost",createPost)
 
 

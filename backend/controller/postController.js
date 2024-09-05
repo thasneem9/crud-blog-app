@@ -44,5 +44,17 @@ const createPost=async(req,res)=>{
         
     }
 }
+const getFeed=async(req,res)=>{
+    //get all posts from Post table
+    try {
+        const posts= await Post.findAll()
+        console.log(posts)
+        res.status(200).json(posts)
+        
+    } catch (error) {
+        res.status(400).json({message:"posts fetched sucesfully",posts})
+        
+    }
+}
 
-export {createPost}
+export {createPost,getFeed}
