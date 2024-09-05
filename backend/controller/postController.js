@@ -57,4 +57,32 @@ const getFeed=async(req,res)=>{
     }
 }
 
-export {createPost,getFeed}
+const getMyPosts=async(req,res)=>{
+    const token = req.cookies.jwt;
+    console.log("postttttttt token",token)
+    if (!token) {
+        return res.status(401).json({ error: "Unauthorized" });
+    }
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decodedToken.userId;
+
+    console.log("Decoded Token:", decodedToken);
+
+    console.log("Decoded User ID:", userId);
+
+   try {
+    const posts=await Post.findAll({
+        where:{
+            postedBy:userId
+
+        }}
+        
+    )
+    res.status(200).json({message:"succesfyl fetching of mypsts",posts})
+   } catch (error) {
+    res.status(400).json(error)
+   }
+
+}
+
+export {createPost,getFeed,getMyPosts}
