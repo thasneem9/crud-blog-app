@@ -1,30 +1,43 @@
 import React from 'react'
-import { Flex, HStack ,Box, Avatar,Text} from '@chakra-ui/react'
-
+import { Flex, HStack ,Box, Avatar,Text, Heading} from '@chakra-ui/react'
+import {useNavigate} from 'react-router-dom'
+import {Routes,Route} from 'react-router-dom'
 
 const BlogCard = ({author,text,title,updatedAt}) => {
+  <Routes >
 
+  </Routes>
+  const navigate=useNavigate()
+
+  const handleView=()=>{
+
+    navigate('/post')
+   
+
+  }
+
+  const formattedDate = new Date(updatedAt).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+   /*  hour: '2-digit',
+    minute: '2-digit', */
+  });
+   
   
   return (
           <>
     
-            <Box bg="gray.100" m="20px" width={"300px"} height={"300px"}  borderRadius="15px">
+            <Box bg="gray.100" m="20px" width={"300px"} height={"300px"}  borderRadius="15px" onClick={handleView}>
               <Flex flexDirection={"column"}>
               <HStack>
                 <Avatar ml={"4px"} mt={"4px"}></Avatar>
-              <Flex flexDirection={"column"}>
-                <Text fontSize={"20px"}>{title}</Text>
-                
-               <Flex flexDirection={"row"}>
-               <Text>{author}</Text>
-
-               <Text  mr={"0px"} ml={"50px"}>{updatedAt}</Text>
-               </Flex>
-
-              </Flex>
+              
+                <Text fontSize={"20px"}>{author}</Text>
+                <Text  mr={"2px"} ml={"50px"}>{formattedDate}</Text>
               </HStack>
-
-              <Text p={"10px"}>
+              <Heading ml={"10px"}>{title}</Heading>
+              <Text p={"10px"} >
                 {text}
               </Text>
               </Flex>

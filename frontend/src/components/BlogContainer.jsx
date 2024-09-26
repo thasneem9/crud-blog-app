@@ -31,8 +31,6 @@ getFeed()
 },[])
 
 
- 
-
   return (
     <Flex flexBasis="960px" m="30px" bg=""   flexDirection={["column", "column", "row"]}  >
      
@@ -46,6 +44,7 @@ getFeed()
       key={post.id}
        author={post.author} 
        text={post.text} 
+       title={post.title}
        img={post.img} 
        postedBy={post.postedBy} 
        updatedAt={post.updatedAt}
@@ -57,14 +56,14 @@ getFeed()
      </Flex>
        
    
-        <Flex bg="yellow.100" flexBasis={"400px"} ml="50px"  flexDirection={"column"}>
+        {/* <Flex bg="yellow.100" flexBasis={"400px"} ml="50px"  flexDirection={"column"}>
         <Heading ml="60px">Popular posts</Heading>
        
            <LatestPost/>
            <LatestPost/>
 
            
-        </Flex>
+        </Flex> */}
         
     </Flex>
   
