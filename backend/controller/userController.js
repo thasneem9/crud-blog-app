@@ -79,6 +79,50 @@ const login= async (req,res)=>{
         res.status(400).json({error})
     }
 }
+const editProfile=async(req,res)=>{
+    const name=req.body.name
+    const bio=req.body.bio
+    const username=req.body.username
 
+    try {
+        const token = req.cookies.jwt;
+        console.log("postttttttt token",token)
+        if (!token) {
+            return res.status(401).json({ error: "Unauthorized" });
+        }
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+        const userId = decodedToken.userId;
 
+        console.log("Decoded Token:", decodedToken);
+
+        console.log("Decoded User ID:", userId);
+const user= User.findByPk(userId)
+
+user.name=name||user.name
+user.bio=bio||user.bio
+user.username=username||user.username
+user=await User.Save()
+
+//update author in post>>??
+res.status(200).json(user)
+        
+    } catch (error) {
+        console.error(error)
+        
+    }
+}
+const getUserDetails=async(req,res)=>{
+    const token = req.cookies.jwt;
+    console.log("postttttttt token",token)
+    if (!token) {
+        return res.status(401).json({ error: "Unauthorized" });
+    }
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decodedToken.userId;
+
+    console.log("Decoded Token:", decodedToken);
+
+    console.log("Decoded User ID:", userId);
+//need toget userdetails to set it as initail values, in forntend.=next step gudluck
+}
 export {signup,login}
