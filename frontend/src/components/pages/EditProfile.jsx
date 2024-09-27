@@ -16,8 +16,34 @@ import {
   Center,
 } from '@chakra-ui/react'
 import { SmallCloseIcon } from '@chakra-ui/icons'
+import { useState } from 'react'
 
-export default function EditProfile() {
+export default  function EditProfile() {
+const [name,setName]=useState('')
+const [bio,setBio]=useState('')
+const [username,setUsername]=useState('')
+
+const newData={name,bio,username}
+    //getEXISITING USERDETAILS to display as initial value
+
+    //sendNewdetails
+    console.log(newData)
+   const handleSubmit=async()=>{
+    try {
+        res=await fetch('/api/users/editProfile',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify(newData)
+        })
+        const data=await res.json()
+       console.log(data,"editedInfo")
+        
+    } catch (error) {
+        console.error("error in editing profile",error)
+        
+    }
+   }
+
   return (
     <Flex
       minH={'100vh'}
@@ -63,24 +89,28 @@ export default function EditProfile() {
             placeholder="UserName"
             _placeholder={{ color: 'gray.500' }}
             type="text"
+            onChange={(e)=>setName(e.target.value)}
+          />
+        </FormControl>
+        <FormControl id="bio" isRequired>
+          <FormLabel>Bio</FormLabel>
+          <Input
+            placeholder="Templatebio"
+            _placeholder={{ color: 'gray.500' }}
+            type="text"
+            onChange={(e)=>setBio(e.target.value)}
           />
         </FormControl>
         <FormControl id="email" isRequired>
-          <FormLabel>Email address</FormLabel>
+          <FormLabel>Name</FormLabel>
           <Input
             placeholder="your-email@example.com"
             _placeholder={{ color: 'gray.500' }}
-            type="email"
+            type="text"
+            onChange={(e)=>setBio(e.target.value)}
           />
         </FormControl>
-        <FormControl id="password" isRequired>
-          <FormLabel>Password</FormLabel>
-          <Input
-            placeholder="password"
-            _placeholder={{ color: 'gray.500' }}
-            type="password"
-          />
-        </FormControl>
+       
         <Stack spacing={6} direction={['column', 'row']}>
           <Button
             bg={'red.400'}
@@ -93,6 +123,7 @@ export default function EditProfile() {
           </Button>
           <Button
             bg={'blue.400'}
+            onClick={handleSubmit}
             color={'white'}
             w="full"
             _hover={{

@@ -40,7 +40,7 @@ const handleHome=()=>{
         <img src={blog} alt="Blog" width="70" height="70"  onClick={handleBlog} />
         <Button onClick={handleNavigate}>Login</Button>
         <CgProfile size="30px" onClick={handleProfileEdit}/>
-        <IoMdHome  onClick={handleHome} />
+        <IoMdHome size="30px"  onClick={handleHome} />
         
 
       </HStack>
