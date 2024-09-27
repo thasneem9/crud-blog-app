@@ -15,23 +15,35 @@ const MyEditor = () => {
   const [content, setContent] = useState("");
 
   const [post,setPost]=useRecoilState(postAtom)
-
+  const [image, setImage] = useState(null);
   const user = useRecoilValue(userAtom);
 
   console.log("++++",user)
   console.log("++++dataname",user.username)
   const author=user.username
 
+  const formData = new FormData();
+    formData.append("author", author);
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("font", font);
+    formData.append("fontSize", fontSize);
+    formData.append("alignment", alignment);
+
+    // Append the image only if a file is selected
+    if (image) {
+      formData.append("img", image); // 'img' is the field name the backend expects
+    }
+
  
-const postInfo={author,title,content,font,fontSize,alignment};
+const postInfo={author,title,content,image,font,fontSize,alignment};
 const handlePost=async()=>{
   
   try {
     console.log(postInfo)
     const res= await fetch('/api/posts/createPost',{
       method:'POST',
-      headers:{"Content-Type":'application/json'},
-      body:JSON.stringify(postInfo)
+      body:formData
 
 
     })
@@ -46,7 +58,10 @@ const handlePost=async()=>{
 } catch (error) {
   
 }}
-
+const handleImageChange = (e) => {
+  const file = e.target.files[0]; 
+  setImage(file); 
+};
 
   return (
     <div className="editor-container">
@@ -99,6 +114,13 @@ const handlePost=async()=>{
           placeholder="Start writing here..."
           value={content}
           onChange={(e)=>setContent(e.target.value)}
+        />
+      </div>
+      <div className="editor-title">
+        <input
+         type="file"
+          placeholder="Enter title here..."
+          accept="image/*" onChange={handleImageChange}
         />
       </div>
       <Button colorScheme="purple" onClick={handlePost}>Post</Button>

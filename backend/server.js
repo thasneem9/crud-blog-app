@@ -13,6 +13,8 @@ const app=express();
 
 app.use(cors())
 app.use(cookieParser()); 
+app.use("/uploads", express.static("uploads"));
+app.use(express.urlencoded({ limit: '10mb', extended: true })); // For form submissions
 const PORT=5000;
 
 

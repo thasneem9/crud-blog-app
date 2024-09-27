@@ -13,6 +13,7 @@ const createPost=async(req,res)=>{
     const content=dataReceived.content
     const author=dataReceived.author
     const postedBy=dataReceived.author
+    const img = req.file ? req.file.path : null;
     try {
         const token = req.cookies.jwt;
         console.log("postttttttt token",token)
@@ -30,6 +31,7 @@ const createPost=async(req,res)=>{
         const newPost= await Post.create({
             title:title,
             text:content,
+            img:img,
             author:author,
             postedBy:userId
 
