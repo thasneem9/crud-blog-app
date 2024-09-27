@@ -107,4 +107,26 @@ const displayPost=async(req,res)=>{
     }
 
 }
-export {createPost,getFeed,getMyPosts,displayPost}
+
+const editPost=async(req,res)=>{
+    const title=req.body.title
+    const author=req.body.author 
+    const content=req.body.content
+    console.log("RECIVED POSTDIT6666:",content,title)
+    const {postId}=req.params;
+    //console
+    try {
+        const post= await Post.findByPk(postId)
+        post.title=title||post.title
+        post.text=content||post.text
+        const updatedPost=await post.save()
+        res.status(200).json({content:updatedPost.content,title:updatedPost.title})
+        console.log("[[[[[[[ isss:",updatedPost.content)
+        
+    } catch (error) {
+        console.log(error)
+        
+    }
+}
+
+export {createPost,getFeed,getMyPosts,displayPost,editPost}

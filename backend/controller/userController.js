@@ -101,10 +101,10 @@ const user= User.findByPk(userId)
 user.name=name
 user.bio=bio
 user.username=username
-user=await User.Save()
+updatedUser=await user.save()
 
 //update author in post>>??
-res.status(200).json(user)
+res.status(200).json(updatedUser)
         
     } catch (error) {
         console.error(error)

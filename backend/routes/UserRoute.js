@@ -7,6 +7,7 @@ const router=express.Router();
 
 router.post("/signup",signup)
 router.post("/login",login)
-router.post("/editProfile",editProfile)
+/* router.post("/editProfile",editProfile) */
+
 
 export default router;

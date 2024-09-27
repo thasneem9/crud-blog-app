@@ -3,40 +3,73 @@ import React, { useState } from "react";
 import './editor.css'
 import { Button } from "@chakra-ui/react";
 import userAtom from "../atoms/userAtom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { postAtom } from "../atoms/postAtom.js";
 import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const EditPostPage = () => {
     const user = useRecoilValue(userAtom);
-    const post = useRecoilValue(postAtom);
+   /*  const post = useRecoilValue(postAtom); */
+    const [post,setPost]=useRecoilState(postAtom)
     const {postId}=useParams();
     console.log(postId)
     //that for intital values
     console.log("++++",user)
     console.log("++++dataname",user.username)
-    const author=user.username
-    const [font, setFont] = useState("Arial");
-    const [fontSize, setFontSize] = useState("16px");
-    const [alignment, setAlignment] = useState("left");
-  
-    const [title, setTitle] = useState(post.title);
-    const [content, setContent] = useState(post.content);
+    
   //we have to go to /editpost/postid..it works
   //send to backend
   
 
     
-  
+  const [font, setFont] = useState("Arial");
+  const [fontSize, setFontSize] = useState("16px");
+  const [alignment, setAlignment] = useState("left");
+
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
 
   
    
-  const newPost={author,title,content,font,fontSize,alignment};
-  console.log(newPost)
+
+
+  useEffect(()=>{
+    const fetchPostDetails=async(req,res)=>{
+        try {
+            const res=await fetch(`/api/posts/getPost/${postId}`,{
+                method:'GET',
+                headers:{'Content-Type':'application/json'},
+    
+            })
+            const postDetails=await res.json()
+            if(postDetails){
+            console.log("myy veryown post details lol",postDetails)
+            setPost({
+                title:postDetails.post.title,
+                content:postDetails.post.content
+            })
+            console.log(post)
+            setTitle(postDetails.post.title);
+            setContent(postDetails.post.text);
+            }
+            
+        } catch (error) {
+            console.error(error)
+            
+        }
+      }
+      fetchPostDetails()
+    
+},[postId])
+const author=user.username
+  
+    const newPost={author,title,content,font,fontSize,alignment};
+    console.log(newPost)
   const handlePost=async()=>{
     
     try {
-      console.log(postInfo)
+      console.log(newPost)
       const res= await fetch(`/api/posts/editPost/${postId}`,{
         method:'POST',
         headers:{"Content-Type":'application/json'},
@@ -46,10 +79,19 @@ const EditPostPage = () => {
       })
       const data = await res.json()
       console.log("data recievd:",data)
+      if(data){
+        setPost({
+            title:data.title,
+            content:data.content
+          })
+
+      }
+     
     
   } catch (error) {
-    
+    console.log(error)
   }}
+
 
 
 
