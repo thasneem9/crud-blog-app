@@ -21,7 +21,7 @@ const router=express.Router();
 router.get("/getMyPosts",getMyPosts)
 router.get("/getFeed",getFeed)
 router.get("/getPost/:postId",displayPost)
-router.post("/editPost/:postId",editPost)
+router.post("/editPost/:postId",upload.single("img"),editPost)
 router.delete("/deletePost/:postId",deletePost)
 
 

@@ -13,6 +13,7 @@ const EditPostPage = () => {
    /*  const post = useRecoilValue(postAtom); */
     const [post,setPost]=useRecoilState(postAtom)
     const {postId}=useParams();
+    const [image,setImage]=useState(null)
     console.log(postId)
     //that for intital values
     console.log("++++",user)
@@ -63,7 +64,19 @@ const EditPostPage = () => {
     
 },[postId])
 const author=user.username
-  
+const formData = new FormData();
+formData.append("author", author);
+formData.append("title", title);
+formData.append("content", content);
+formData.append("font", font);
+formData.append("fontSize", fontSize);
+formData.append("alignment", alignment);
+
+// Append the image only if a file is selected
+if (image) {
+  formData.append("img", image); // 'img' is the field name the backend expects
+}
+
     const newPost={author,title,content,font,fontSize,alignment};
     console.log(newPost)
   const handlePost=async()=>{
@@ -72,8 +85,8 @@ const author=user.username
       console.log(newPost)
       const res= await fetch(`/api/posts/editPost/${postId}`,{
         method:'POST',
-        headers:{"Content-Type":'application/json'},
-        body:JSON.stringify(newPost)
+
+        body:formData
   
   
       })
@@ -93,7 +106,10 @@ const author=user.username
   }}
 
 
-
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]; 
+    setImage(file); 
+  };
 
   return (
     <div className="editor-container">
@@ -146,6 +162,13 @@ const author=user.username
           placeholder="Start writing here..."
           value={content}
           onChange={(e)=>setContent(e.target.value)}
+        />
+      </div>
+      <div className="editor-title">
+        <input
+         type="file"
+          placeholder="Enter title here..."
+          accept="image/*" onChange={handleImageChange}
         />
       </div>
       <Button colorScheme="purple" onClick={handlePost}>Post</Button>
