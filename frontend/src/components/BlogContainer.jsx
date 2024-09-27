@@ -4,10 +4,12 @@ import { wrap } from 'framer-motion'
 import BlogCard from './BlogCard'
 import LatestPost from './LatestPost'
 import { useState,useEffect } from 'react'
-
+import { useNavigate } from 'react-router-dom'
 
 const BlogContainer = () => {
   const [posts,setPosts]=useState([])
+
+
 
 useEffect(()=>{
   const getFeed=async()=>{
@@ -31,6 +33,9 @@ getFeed()
 },[])
 
 
+
+
+
   return (
     <Flex flexBasis="960px" m="30px" bg=""   flexDirection={["column", "column", "row"]}  >
      
@@ -42,13 +47,18 @@ getFeed()
       posts.map((post)=>(
       <BlogCard 
       key={post.id}
+      postId={post.id}
        author={post.author} 
        text={post.text} 
        title={post.title}
        img={post.img} 
        postedBy={post.postedBy} 
        updatedAt={post.updatedAt}
+    
+
+    
        />
+       
        ))
        ):(
        <p>No posts awvilble</p>

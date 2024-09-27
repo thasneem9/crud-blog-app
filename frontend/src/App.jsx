@@ -20,7 +20,7 @@ function App() {
     <Route path='/auth' element={<AuthPage/>}/>
     <Route path='/me' element={<Me/>}/>
     <Route path='/create' element={<MyEditor/>}/>
-    <Route path='/post' element={<PostPage />}/>
+    <Route path='/post/:postId' element={<PostPage />}/>
     </Routes>
 
     </>

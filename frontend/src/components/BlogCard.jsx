@@ -3,18 +3,15 @@ import { Flex, HStack ,Box, Avatar,Text, Heading} from '@chakra-ui/react'
 import {useNavigate} from 'react-router-dom'
 import {Routes,Route} from 'react-router-dom'
 
-const BlogCard = ({author,text,title,updatedAt}) => {
-  <Routes >
+const BlogCard = ({author,text,title,updatedAt,postId}) => {
 
-  </Routes>
-  const navigate=useNavigate()
+ console.log(postId)
+ 
+const navigate=useNavigate()
 
-  const handleView=()=>{
-
-    navigate('/post')
-   
-
-  }
+const handleView=(postId)=>{
+  navigate(`/post/${postId}`)
+}
 
   const formattedDate = new Date(updatedAt).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -28,7 +25,7 @@ const BlogCard = ({author,text,title,updatedAt}) => {
   return (
           <>
     
-            <Box bg="gray.100" m="20px" width={"300px"} height={"300px"}  borderRadius="15px" onClick={handleView}>
+            <Box bg="gray.100" m="20px" width={"300px"} height={"300px"}  borderRadius="15px" onClick={()=>{handleView(postId)}} >
               <Flex flexDirection={"column"}>
               <HStack>
                 <Avatar ml={"4px"} mt={"4px"}></Avatar>

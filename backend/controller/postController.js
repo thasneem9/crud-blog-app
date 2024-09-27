@@ -84,5 +84,27 @@ const getMyPosts=async(req,res)=>{
    }
 
 }
+const displayPost=async(req,res)=>{
+  
 
-export {createPost,getFeed,getMyPosts}
+    const {postId}=req.params;
+    try {
+        const post= await Post.findOne({
+            where:{
+                id:postId
+                
+            }
+        })
+        if(!post){
+            return res.status(404).json({message:"post not found"})
+        }
+        console.log("postttttt",post)
+        return res.status(200).json({message:"Post detai;sfetched sucesfully", post})
+    } catch (error) {
+        console.error("eror fetching post:",error);
+        res.status(500).json({error:'internalserver error'});
+        
+    }
+
+}
+export {createPost,getFeed,getMyPosts,displayPost}
