@@ -4,7 +4,9 @@ import { useParams } from 'react-router-dom';
 import {useRecoilValue} from 'recoil'
 import { useNavigate } from 'react-router-dom';
 import userAtom from '../atoms/userAtom.js'
+import { useToast } from '@chakra-ui/react';
 const PostPage = () => {
+  const toast=useToast();
   const navigate=useNavigate()
   const user=useRecoilValue(userAtom)
   const userId=(user.userId)
@@ -17,6 +19,34 @@ const PostPage = () => {
 
 const handleEdit=()=>{
   navigate(`/editPost/${postId}`)
+}
+const confirmDelete=()=>{
+  const isConfirmed=window.confirm("Are you sure you want to delte this post?")
+  if(isConfirmed){
+    handleDelete()
+  }
+}
+const handleDelete=async()=>{
+
+
+  
+  const res=await fetch(`/api/posts/deletePost/${postId}`,{
+    method:'DELETE',
+  })
+  const data=await res.json()
+  if(data){
+    toast({
+      status:"success",
+      title:"Deleted Post"
+    })
+    window.location.reload()
+  
+    //taost
+    console.log("success")
+  }
+  if(data.error){
+    console.error(error)
+  }
 }
 
   useEffect(()=>{
@@ -32,6 +62,7 @@ const handleEdit=()=>{
         if(data){
           setPost(data.post)
         }
+      
       
         
       } catch (error) {
@@ -53,6 +84,7 @@ const handleEdit=()=>{
 
   return (
   <>
+  {post ?(
  <Flex bg={"blue.100"}flexDirection={"column"} >
   <HStack>
   <Heading ml={"40%"} p={"10px"}>{post?.title}</Heading>
@@ -64,11 +96,14 @@ const handleEdit=()=>{
 
 
   </Flex>
+  ):(
+    <h1>Postis removed/not availble anymore</h1>
+  )}
   {/* if postedBy==userId then render thesebuttons */}
  {post?.postedBy===userId && (
   <div>
     <Button onClick={handleEdit}>Edit button</Button>
-    <Button>Delete button</Button>
+    <Button onClick={confirmDelete}>Delete button</Button>
   </div>
  )}
   </>

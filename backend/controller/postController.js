@@ -128,5 +128,16 @@ const editPost=async(req,res)=>{
         
     }
 }
+const deletePost=async(req,res)=>{
+    const {postId}=req.params;
+    try {
+        const post=await Post.findByPk(postId)
+        post.destroy()
+        res.status(200).json("succes")
+    } catch (error) {
+        res.status(500).json(error)
+        
+    }
+}
 
-export {createPost,getFeed,getMyPosts,displayPost,editPost}
+export {createPost,getFeed,getMyPosts,displayPost,editPost,deletePost}
