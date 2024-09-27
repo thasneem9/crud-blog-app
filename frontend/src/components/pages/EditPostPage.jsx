@@ -1,51 +1,56 @@
 // src/EditorComponent.js
 import React, { useState } from "react";
-import "../myeditor.css";
+import './editor.css'
 import { Button } from "@chakra-ui/react";
-import userAtom from "./atoms/userAtom.js";
+import userAtom from "../atoms/userAtom";
 import { useRecoilValue } from "recoil";
-import { useRecoilState } from "recoil";
-import { postAtom } from "./atoms/postAtom.js";
-const MyEditor = () => {
-  const [font, setFont] = useState("Arial");
-  const [fontSize, setFontSize] = useState("16px");
-  const [alignment, setAlignment] = useState("left");
+import { postAtom } from "../atoms/postAtom.js";
+import { useParams } from "react-router-dom";
 
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-
-  const [post,setPost]=useRecoilState(postAtom)
-
-  const user = useRecoilValue(userAtom);
-
-  console.log("++++",user)
-  console.log("++++dataname",user.username)
-  const author=user.username
-
- 
-const postInfo={author,title,content,font,fontSize,alignment};
-const handlePost=async()=>{
+const EditPostPage = () => {
+    const user = useRecoilValue(userAtom);
+    const post = useRecoilValue(postAtom);
+    const {postId}=useParams();
+    console.log(postId)
+    //that for intital values
+    console.log("++++",user)
+    console.log("++++dataname",user.username)
+    const author=user.username
+    const [font, setFont] = useState("Arial");
+    const [fontSize, setFontSize] = useState("16px");
+    const [alignment, setAlignment] = useState("left");
   
-  try {
-    console.log(postInfo)
-    const res= await fetch('/api/posts/createPost',{
-      method:'POST',
-      headers:{"Content-Type":'application/json'},
-      body:JSON.stringify(postInfo)
-
-
-    })
-    const data = await res.json()
-    console.log("data recievd:",data)
-    setPost({
-      title:title,
-      author:author,
-      content:content
-    })
+    const [title, setTitle] = useState(post.title);
+    const [content, setContent] = useState(post.content);
+  //we have to go to /editpost/postid..it works
+  //send to backend
   
-} catch (error) {
+
+    
   
-}}
+
+  
+   
+  const newPost={author,title,content,font,fontSize,alignment};
+  console.log(newPost)
+  const handlePost=async()=>{
+    
+    try {
+      console.log(postInfo)
+      const res= await fetch(`/api/posts/editPost/${postId}`,{
+        method:'POST',
+        headers:{"Content-Type":'application/json'},
+        body:JSON.stringify(newPost)
+  
+  
+      })
+      const data = await res.json()
+      console.log("data recievd:",data)
+    
+  } catch (error) {
+    
+  }}
+
 
 
   return (
@@ -103,7 +108,7 @@ const handlePost=async()=>{
       </div>
       <Button colorScheme="purple" onClick={handlePost}>Post</Button>
     </div>
-  );
-};
+  )
+}
 
-export default MyEditor;
+export default EditPostPage

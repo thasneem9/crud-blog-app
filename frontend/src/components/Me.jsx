@@ -48,9 +48,13 @@ My Posts
     posts.map((post)=>(
       <BlogCard
       key={post.id}
-      text={post.text}
-      author={post.author}
-      updatedAt={post.UpdatedAt}
+      postId={post.id}
+       author={post.author} 
+       text={post.text} 
+       title={post.title}
+       img={post.img} 
+       postedBy={post.postedBy} 
+       updatedAt={post.updatedAt}
       
 
       />

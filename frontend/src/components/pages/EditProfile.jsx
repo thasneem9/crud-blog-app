@@ -17,12 +17,17 @@ import {
 } from '@chakra-ui/react'
 import { SmallCloseIcon } from '@chakra-ui/icons'
 import { useState } from 'react'
+import {useRecoilValue}from 'recoil'
+import userAtom from '../atoms/userAtom.js'
 
+import { useToast } from '@chakra-ui/react'
 export default  function EditProfile() {
-const [name,setName]=useState('')
-const [bio,setBio]=useState('')
-const [username,setUsername]=useState('')
-
+const toast=useToast()
+const user=useRecoilValue(userAtom)
+const [name,setName]=useState(user.name)
+const [bio,setBio]=useState(user.bio)
+const [username,setUsername]=useState(user.username)
+console.log(user)
 const newData={name,bio,username}
     //getEXISITING USERDETAILS to display as initial value
 
@@ -37,6 +42,13 @@ const newData={name,bio,username}
         })
         const data=await res.json()
        console.log(data,"editedInfo")
+       if(data){
+        toast({
+            title:"updated Profile",
+            status:"success"
+        })
+
+       }
         
     } catch (error) {
         console.error("error in editing profile",error)
@@ -89,7 +101,9 @@ const newData={name,bio,username}
             placeholder="UserName"
             _placeholder={{ color: 'gray.500' }}
             type="text"
+            value={username}
             onChange={(e)=>setName(e.target.value)}
+
           />
         </FormControl>
         <FormControl id="bio" isRequired>
@@ -98,6 +112,7 @@ const newData={name,bio,username}
             placeholder="Templatebio"
             _placeholder={{ color: 'gray.500' }}
             type="text"
+            value={bio}
             onChange={(e)=>setBio(e.target.value)}
           />
         </FormControl>
@@ -107,6 +122,7 @@ const newData={name,bio,username}
             placeholder="your-email@example.com"
             _placeholder={{ color: 'gray.500' }}
             type="text"
+            value={name}
             onChange={(e)=>setBio(e.target.value)}
           />
         </FormControl>

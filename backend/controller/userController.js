@@ -56,7 +56,7 @@ const login= async (req,res)=>{
       
        const user= await User.findOne({
         where:{username:username},
-        attributes:['password','id']//select only password and id
+        attributes:['password','id','bio','name']//select only password and id and bio and name
        })
        
        const isMatch = await bcrypt.compare(password, user.password);
@@ -70,7 +70,7 @@ const login= async (req,res)=>{
             return res.status(500).json({ error: "Token generation failed" });
         }
         
-        res.status(200).json({message:"login sucesful",username:username,isMatch:isMatch,token:token})
+        res.status(200).json({message:"login sucesful",username:username,isMatch:isMatch,token:token,bio:user.bio,name:user.name,userId:user.id})
         
        }else{
         res.status(400).json({error:"incorect credentials"})
@@ -98,9 +98,9 @@ const editProfile=async(req,res)=>{
         console.log("Decoded User ID:", userId);
 const user= User.findByPk(userId)
 
-user.name=name||user.name
-user.bio=bio||user.bio
-user.username=username||user.username
+user.name=name
+user.bio=bio
+user.username=username
 user=await User.Save()
 
 //update author in post>>??
@@ -111,18 +111,5 @@ res.status(200).json(user)
         
     }
 }
-const getUserDetails=async(req,res)=>{
-    const token = req.cookies.jwt;
-    console.log("postttttttt token",token)
-    if (!token) {
-        return res.status(401).json({ error: "Unauthorized" });
-    }
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    const userId = decodedToken.userId;
 
-    console.log("Decoded Token:", decodedToken);
-
-    console.log("Decoded User ID:", userId);
-//need toget userdetails to set it as initail values, in forntend.=next step gudluck
-}
-export {signup,login}
+export {signup,login,editProfile}

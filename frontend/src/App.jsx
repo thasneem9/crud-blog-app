@@ -7,6 +7,7 @@ import Me from './components/Me.jsx'
 import MyEditor from './components/MyEditor.jsx'
 import PostPage from './components/pages/PostPage.jsx'
 import EditProfile from './components/pages/EditProfile.jsx'
+import EditPostPage from './components/pages/EditPostPage.jsx'
 function App() {
   const { isAuthenticated } = useAuth();
   return (
@@ -22,6 +23,7 @@ function App() {
     <Route path='/me' element={<Me/>}/>
     <Route path='/create' element={<MyEditor/>}/>
     <Route path='/post/:postId' element={<PostPage />}/>
+    <Route path='/editPost/:postId' element={<EditPostPage />}/>
     <Route path='/editProfile' element={<EditProfile />}/>
     </Routes>
 
