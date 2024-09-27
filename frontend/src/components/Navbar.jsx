@@ -3,8 +3,8 @@ import { Container, Heading, Text ,Flex,Button,HStack,Spacer} from '@chakra-ui/r
 import { CgProfile } from "react-icons/cg";
 import { LuPlusSquare } from "react-icons/lu";
 import {useNavigate} from'react-router-dom';
-
-
+import { IoMdHome } from "react-icons/io";
+import blog from './blog.svg'
 
 
 const Navbar = () => {
@@ -17,11 +17,16 @@ const Navbar = () => {
     navigate('/auth');
     
   }
-  const handleProfile=()=>{
+  const handleBlog=()=>{
     navigate('/me');
     
   }
-
+  const handleProfileEdit=()=>{
+    navigate('/editProfile')
+  }
+const handleHome=()=>{
+  navigate('/')
+}
 
   return (
     
@@ -30,10 +35,12 @@ const Navbar = () => {
       <Spacer></Spacer>
 
       <HStack gap='20px'>
-        <Button>BD</Button>
-        <Text>blogdaily@gmail.com</Text>
-        <CgProfile size="30px" onClick={handleProfile}/>
+       
+    
+        <img src={blog} alt="Blog" width="70" height="70"  onClick={handleBlog} />
         <Button onClick={handleNavigate}>Login</Button>
+        <CgProfile size="30px" onClick={handleProfileEdit}/>
+        <IoMdHome  onClick={handleHome} />
         
 
       </HStack>
