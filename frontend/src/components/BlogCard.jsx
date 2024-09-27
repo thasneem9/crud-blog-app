@@ -21,7 +21,16 @@ const handleView=(postId)=>{
     minute: '2-digit', */
   });
    
-  
+  // Function to truncate text at the last space before MAX_LENGTH
+  const MAX_LENGTH=200
+  const truncateText = (text) => {
+    if (text.length <= MAX_LENGTH) return text;
+
+    const trimmedText = text.substring(0, MAX_LENGTH);
+    const lastSpaceIndex = trimmedText.lastIndexOf(' ');
+
+    return lastSpaceIndex > 0 ? trimmedText.substring(0, lastSpaceIndex) + '..[Read More]' : trimmedText + '...';
+  };
   return (
           <>
     
@@ -35,7 +44,8 @@ const handleView=(postId)=>{
               </HStack>
               <Heading ml={"10px"}>{title}</Heading>
               <Text p={"10px"} >
-                {text}
+               {/*  {text.length>200? text.substring(0,200)+'...':text} */}
+               {truncateText(text)}
               </Text>
               </Flex>
 

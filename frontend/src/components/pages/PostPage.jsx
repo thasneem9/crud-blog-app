@@ -1,4 +1,4 @@
-import { Button, Flex, Heading ,HStack,Text} from '@chakra-ui/react';
+import { Button, Flex, Heading ,HStack,Image,Text} from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import {useRecoilValue} from 'recoil'
@@ -81,18 +81,22 @@ const handleDelete=async()=>{
     'day':'numeric',
 
   })
-
+  console.log("Image URL:", post?.img);
   return (
   <>
   {post ?(
- <Flex bg={"blue.100"}flexDirection={"column"} >
+ <Flex bg={"blue.100"}flexDirection={"column"} mr={"70px"}
+ ml={"70px"} >
   <HStack>
   <Heading ml={"40%"} p={"10px"}>{post?.title}</Heading>
   <Text ml={"90px"}>{fomattedDate}</Text>
 
   </HStack>
-
-  <Text  p={"10px"}>{post?.text}</Text>
+  {post?.img&&
+  
+  <Image ml={"46%"} boxSize="400px" src={`http://localhost:5000/${post?.img.replace(/\\/g, '/')}`} alt="Post Image" ></Image>
+  }
+  <Text fontSize={"30px"} p={"10px"}>{post?.text}</Text>
 
 
   </Flex>
