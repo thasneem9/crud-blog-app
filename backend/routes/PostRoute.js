@@ -1,5 +1,5 @@
 import express from 'express'
-import { createPost, displayPost,getFeed, getMyPosts,editPost,deletePost} from '../controller/postController.js';
+import { createPost, displayPost,getFeed, getMyPosts,editPost,deletePost,searchPost} from '../controller/postController.js';
 import multer from 'multer';
 import path from 'path';
 // Configure multer for single file upload
@@ -21,6 +21,7 @@ const router=express.Router();
 router.get("/getMyPosts",getMyPosts)
 router.get("/getFeed",getFeed)
 router.get("/getPost/:postId",displayPost)
+router.get("/search",searchPost)
 router.post("/editPost/:postId",upload.single("img"),editPost)
 router.delete("/deletePost/:postId",deletePost)
 

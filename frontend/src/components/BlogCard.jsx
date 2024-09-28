@@ -19,12 +19,12 @@ const BlogCard = ({ author, text, title, updatedAt, postId, img,category }) => {
   // Function to truncate text at the last space before MAX_LENGTH
   const MAX_LENGTH = 200;
   const truncateText = (text) => {
-    if (text.length <= MAX_LENGTH) return text;
+    if (text?.length <= MAX_LENGTH) return text;
 
-    const trimmedText = text.substring(0, MAX_LENGTH);
-    const lastSpaceIndex = trimmedText.lastIndexOf(' ');
+    const trimmedText = text?.substring(0, MAX_LENGTH);
+    const lastSpaceIndex = trimmedText?.lastIndexOf(' ');
 
-    return lastSpaceIndex > 0 ? trimmedText.substring(0, lastSpaceIndex) + '..[Read More]' : trimmedText + '...';
+    return lastSpaceIndex > 0 ? trimmedText?.substring(0, lastSpaceIndex) + '..[Read More]' : trimmedText + '...';
   };
 
   return (

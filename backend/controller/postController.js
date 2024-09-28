@@ -4,8 +4,8 @@ import Post from "../models/Post.js";
 import bcrypt from 'bcrypt';
 import generateTokenAndSetCookie from "../helpers/generateTokenAndCookies.js";
 import jwt from "jsonwebtoken";
-
-
+import sequelize from "../database/database.js";
+import { Op } from 'sequelize'; 
 
 const createPost=async(req,res)=>{
     const dataReceived=req.body;
@@ -148,4 +148,24 @@ const deletePost=async(req,res)=>{
     }
 }
 
-export {createPost,getFeed,getMyPosts,displayPost,editPost,deletePost}
+const searchPost=async(req,res)=>{
+   try {
+    const {title}=req.query
+    const posts = await Post.findAll({
+        where: {
+          title: {
+            [Op.iLike]: `%${title}%`,  // Case-insensitive LIKE search
+          },
+        },
+      });
+      res.status(200).json(posts);
+    console.log(posts,"-----------------------")
+    
+   } catch (error) {
+    res.status(500).json(error)
+    console.log(error)
+    
+   }
+}
+
+export {createPost,getFeed,getMyPosts,displayPost,editPost,deletePost,searchPost}

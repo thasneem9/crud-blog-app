@@ -9,14 +9,32 @@ import {  Input, InputGroup, InputLeftElement, IconButton } from '@chakra-ui/rea
 import { SearchIcon } from '@chakra-ui/icons';
 const BlogContainer = () => {
   const [posts,setPosts]=useState([])
+  const [query, setQuery] = useState('');
+  const [results,setResults]=useState([])
 
-  const SearchBar = ({ onSearch }) => {
-    const [query, setQuery] = useState('');
+ const handleSearch=async()=>{
+ try {
+  const res=await fetch(`/api/posts/search?title=${query}`,{
+    method:'GET',
+    headers:{'Content-Type':'ápplication/json'}
+  })
+  const searchResults=await res.json()
+  console.log(searchResults)
+  setResults(searchResults)
+ 
   
-    const handleSearch = () => {
-    // Trigger the parent function to handle search
-    };
-  }
+ } catch (error) {
+console.log(error)
+  
+ }
+
+ }
+ useEffect(() => {
+  console.log(results); // Logs the updated results
+}, [results]); // Runs this effect when results change
+ //-------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!NEXT STEPP
+ //render a flex if searchresults exist, else render no result found. in the flex display blogCard component with new searchResults data
+ 
 useEffect(()=>{
   const getFeed=async()=>{
     try {
@@ -38,6 +56,8 @@ getFeed()
 
 },[])
 
+console.log(results)
+
 
 
 
@@ -51,7 +71,7 @@ getFeed()
         </InputLeftElement>
         <Input
           placeholder="Search posts, users, or topics..."
-          value={""}
+          value={query}
           onChange={(e) => setQuery(e.target.value)}
           borderRadius="10px"
           bg="white"
@@ -60,7 +80,7 @@ getFeed()
         />
         <IconButton
           icon={<SearchIcon />}
-          onClick={""}
+          onClick={handleSearch}
           aria-label="Search"
           ml="5px"
           color="pink"
@@ -72,39 +92,52 @@ getFeed()
   <Text className='categories-recent' ml="90">Recent posts</Text>
   <Divider flex="1" ml={10} mr={10} />
 </Flex>
+<Flex flexBasis="960px" m="30px" bg="" flexDirection={["column", "column", "row"]}>
+  <Flex bg="" wrap={"wrap"}>
+    {results?.length > 0 ? (
+      results.map((result) => (
+        <BlogCard 
+          key={result.id}
+          postId={result.id}
+          author={result.author} 
+          text={result.text} 
+          title={result.title}
+          img={result.img} 
+          category={result.category}
+          postedBy={result.postedBy} 
+          updatedAt={result.updatedAt}
+        />
+      ))
+    ) : (
+      <p>No search results available</p>
+    )}
+  </Flex>
+</Flex>
 
-
-    <Flex flexBasis="960px" m="30px" bg=""   flexDirection={["column", "column", "row"]}  >
-
-       
-       
-     <Flex  bg=""  wrap={"wrap"}>
-   
-     {posts?.length>0?(
-      posts.map((post)=>(
-      <BlogCard 
-      key={post.id}
-      postId={post.id}
-       author={post.author} 
-       text={post.text} 
-       title={post.title}
-       img={post.img} 
-       category={post.category}
-       postedBy={post.postedBy} 
-       updatedAt={post.updatedAt}
-    
-
-    
-       />
-       
-       ))
-       ):(
-       <p>No posts awvilble</p>
-       )}
-     </Flex>
-     
-        
+{results?.length === 0 && ( // Show posts only if no results are found
+  <Flex flexBasis="960px" m="30px" bg="" flexDirection={["column", "column", "row"]}>
+    <Flex bg="" wrap={"wrap"}>
+      {posts?.length > 0 ? (
+        posts.map((post) => (
+          <BlogCard 
+            key={post.id}
+            postId={post.id}
+            author={post.author} 
+            text={post.text} 
+            title={post.title}
+            img={post.img} 
+            category={post.category}
+            postedBy={post.postedBy} 
+            updatedAt={post.updatedAt}
+          />
+        ))
+      ) : (
+        <p>No posts available</p>
+      )}
     </Flex>
+  </Flex>
+)}
+
     
     </>
   )
