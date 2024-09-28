@@ -29,6 +29,10 @@ const Post = sequelize.define('Post', {
         type: Sequelize.STRING,
         allowNull: true,
     },
+    category:{
+      type:Sequelize.STRING,
+      allowNull:true
+    }
 
   }, {
       sequelize,

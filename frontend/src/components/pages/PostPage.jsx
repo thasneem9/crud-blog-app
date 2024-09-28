@@ -5,7 +5,8 @@ import { useRecoilValue } from 'recoil';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import userAtom from '../atoms/userAtom';
 import { useToast } from '@chakra-ui/react';
-
+import { CiEdit } from "react-icons/ci";
+import { RiDeleteBin6Line } from "react-icons/ri";
 const PostPage = () => {
   const toast = useToast();
   const navigate = useNavigate();
@@ -73,37 +74,8 @@ const PostPage = () => {
     <>
       {post ? (
         <Flex flexDirection="column" maxW="800px" mx="auto" py="20px" px="10px" bg="white" boxShadow="md" borderRadius="8px">
-          <HStack justifyContent="space-between">
-            <Heading as="h1" flex="1" fontSize="2xl" textAlign="center" noOfLines={2}>
-              {post?.title}
-            </Heading>
-
-            <HStack spacing="12px">
-              {/* Edit and Delete Icons */}
-              {post?.postedBy === userId && (
-                <>
-                  <IconButton
-                    icon={<EditIcon />}
-                    onClick={handleEdit}
-                    variant="outline"
-                    colorScheme="blue"
-                    aria-label="Edit post"
-                  />
-                  <IconButton
-                    icon={<DeleteIcon />}
-                    onClick={confirmDelete}
-                    variant="outline"
-                    colorScheme="red"
-                    aria-label="Delete post"
-                  />
-                </>
-              )}
-              <Text>{fomattedDate}</Text>
-            </HStack>
-          </HStack>
-
-          {/* Post Image */}
-          {post?.img && (
+            {/* Post Image */}
+            {post?.img && (
             <Image
               src={`http://localhost:5000/${post?.img.replace(/\\/g, '/')}`}
               alt="Post Image"
@@ -115,9 +87,27 @@ const PostPage = () => {
               border="1px solid #E2E8F0"
             />
           )}
+          <HStack justifyContent="space-between">
+            <h1 className=" tangerine-regular-title-post" flex="1" fontSize="2xl" textAlign="center" noOfLines={1}>
+              {post?.title}
+            </h1>
+
+            <HStack spacing="12px">
+              {/* Edit and Delete Icons */}
+              {post?.postedBy === userId && (
+                <>
+                 <CiEdit onClick={handleEdit} size={30}/>
+                 <RiDeleteBin6Line onClick={confirmDelete} size={20}/>
+                </>
+              )}
+              <Text>{fomattedDate}</Text>
+            </HStack>
+          </HStack>
+
+        
 
           {/* Post Text */}
-          <Text fontSize="18px" mt="20px" textAlign="justify" lineHeight="1.6">
+          <Text fontSize="18px" mt="20px" textAlign="justify" lineHeight="1.6" className='categories'>
             {post?.text}
           </Text>
         </Flex>

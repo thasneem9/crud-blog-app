@@ -13,6 +13,7 @@ const createPost=async(req,res)=>{
     const content=dataReceived.content
     const author=dataReceived.author
     const postedBy=dataReceived.author
+    const category=dataReceived.category
     const img = req.file ? req.file.path : null;
     try {
         const token = req.cookies.jwt;
@@ -33,7 +34,8 @@ const createPost=async(req,res)=>{
             text:content,
             img:img,
             author:author,
-            postedBy:userId
+            postedBy:userId,
+            category:category
 
         })
         res.status(200).json({ message: "post creation successful",data:newPost });
@@ -114,6 +116,7 @@ const editPost=async(req,res)=>{
     const title=req.body.title
     const author=req.body.author 
     const content=req.body.content
+    const category=req.body.category
     const img = req.file ? req.file.path : null;
     console.log("RECIVED POSTDIT6666:",content,title)
     const {postId}=req.params;
@@ -123,8 +126,9 @@ const editPost=async(req,res)=>{
         post.title=title||post.title
         post.text=content||post.text
         post.img=img||post.img
+        post.category=category||post.category
         const updatedPost=await post.save()
-        res.status(200).json({content:updatedPost.content,title:updatedPost.title})
+        res.status(200).json({content:updatedPost.content,title:updatedPost.title,category:post.category})
         console.log("[[[[[[[ isss:",updatedPost.content)
         
     } catch (error) {

@@ -30,6 +30,7 @@ const EditPostPage = () => {
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [category,setCategory]=useState('');
 
   
    
@@ -49,6 +50,7 @@ const EditPostPage = () => {
             setPost({
                 title:postDetails.post.title,
                 content:postDetails.post.content
+
             })
             console.log(post)
             setTitle(postDetails.post.title);
@@ -71,13 +73,14 @@ formData.append("content", content);
 formData.append("font", font);
 formData.append("fontSize", fontSize);
 formData.append("alignment", alignment);
+formData.append("category",category)
 
 // Append the image only if a file is selected
 if (image) {
   formData.append("img", image); // 'img' is the field name the backend expects
 }
 
-    const newPost={author,title,content,font,fontSize,alignment};
+    const newPost={author,title,content,font,fontSize,alignment,category};
     console.log(newPost)
   const handlePost=async()=>{
     
@@ -162,6 +165,14 @@ if (image) {
           placeholder="Start writing here..."
           value={content}
           onChange={(e)=>setContent(e.target.value)}
+        />
+      </div>
+      <div className="editor-title">
+        <input
+          type="text"
+          placeholder="Enter title here..."
+          value={category}
+          onChange={(e)=>setCategory(e.target.value)}
         />
       </div>
       <div className="editor-title">

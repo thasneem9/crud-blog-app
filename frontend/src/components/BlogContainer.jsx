@@ -89,6 +89,7 @@ getFeed()
        text={post.text} 
        title={post.title}
        img={post.img} 
+       category={post.category}
        postedBy={post.postedBy} 
        updatedAt={post.updatedAt}
     

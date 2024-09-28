@@ -2,7 +2,7 @@ import React from 'react'
 import { Flex, HStack, Box, Text, Heading, Image } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 
-const BlogCard = ({ author, text, title, updatedAt, postId, img }) => {
+const BlogCard = ({ author, text, title, updatedAt, postId, img,category }) => {
 
   const navigate = useNavigate()
 
@@ -63,6 +63,7 @@ const BlogCard = ({ author, text, title, updatedAt, postId, img }) => {
         <Flex flexDirection={"column"} justifyContent="space-between">
           <HStack justifyContent="space-between" mb="10px">
             <Text className='categories' fontWeight={"bold"} fontSize={"16px"} color="gray.700">{author}</Text>
+            <Text>{category}</Text>
             <Text className='categories' fontSize={"14px"} color="gray.500">{formattedDate}</Text>
           </HStack>
           <h1 className='categories-bold' size="md" color="blue.700" mb="10px">{title}</h1>

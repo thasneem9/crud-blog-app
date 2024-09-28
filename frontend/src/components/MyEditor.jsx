@@ -16,6 +16,7 @@ const MyEditor = () => {
 
   const [post,setPost]=useRecoilState(postAtom)
   const [image, setImage] = useState(null);
+  const [category,setCategory]=useState('')
   const user = useRecoilValue(userAtom);
 
   console.log("++++",user)
@@ -29,6 +30,7 @@ const MyEditor = () => {
     formData.append("font", font);
     formData.append("fontSize", fontSize);
     formData.append("alignment", alignment);
+    formData.append("category",category);
 
     // Append the image only if a file is selected
     if (image) {
@@ -114,6 +116,14 @@ const handleImageChange = (e) => {
           placeholder="Start writing here..."
           value={content}
           onChange={(e)=>setContent(e.target.value)}
+        />
+      </div>
+      <div className="editor-title">
+        <input
+          type="text"
+          placeholder="Enter category here..."
+          value={category}
+          onChange={(e)=>setCategory(e.target.value)}
         />
       </div>
       <div className="editor-title">

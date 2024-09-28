@@ -58,7 +58,6 @@ const handleHome=()=>{
       <MenuList ml={"1200px"} mt={"200px"}>
         <MenuItem className='categories'  onClick={handleHome}>Home</MenuItem>
         <MenuItem className='categories'>Categories</MenuItem>
-        <MenuItem className='categories'>Your Posts</MenuItem>
         <MenuItem className='categories' onClick={handleNavigate} >Login/Signup</MenuItem>
         <MenuItem className='categories' onClick={handleProfileEdit}>Profile</MenuItem>
         <MenuItem  className='categories' onClick={handleBlog}>Your Posts</MenuItem>
