@@ -6,6 +6,7 @@ import generateTokenAndSetCookie from "../helpers/generateTokenAndCookies.js";
 import jwt from "jsonwebtoken";
 import sequelize from "../database/database.js";
 import { Op } from 'sequelize'; 
+import Like from "../models/Like.js";
 
 const createPost=async(req,res)=>{
     const dataReceived=req.body;
@@ -168,4 +169,32 @@ const searchPost=async(req,res)=>{
    }
 }
 
-export {createPost,getFeed,getMyPosts,displayPost,editPost,deletePost,searchPost}
+const likePost=async(req,res)=>{
+    const {userId}=req.body
+    const {postId}=req.params;
+    try {
+        
+        const [like, created] = await Like.findOrCreate({
+          where: { postId, userId }
+        });
+         // Count total likes for the post
+    const likeCount = await Like.count({
+        where: { postId }
+      });
+      let alreadyLiked=1;//is true
+    
+        if (created) {
+          res.status(200).json({ message: 'Post liked successfully!',likeCount });
+          alreadyLiked=0//is false!
+        } else {
+            //else deleteeeee
+          res.status(200).json({ message: 'You have already liked this post.',likeCount,alreadyLiked });
+        }
+      } catch (error) {
+        console.error('Error liking post:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+
+}
+
+export {createPost,getFeed,getMyPosts,displayPost,editPost,deletePost,searchPost,likePost}

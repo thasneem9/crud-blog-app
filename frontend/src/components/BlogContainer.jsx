@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex,Container, HStack ,Box,Heading,Image,Text, Divider} from '@chakra-ui/react'
+import { Flex,Container, HStack ,Box,Heading,Image,Text, Divider,VStack} from '@chakra-ui/react'
 import { wrap } from 'framer-motion'
 import BlogCard from './BlogCard'
 import LatestPost from './LatestPost'
@@ -11,7 +11,7 @@ const BlogContainer = () => {
   const [posts,setPosts]=useState([])
   const [query, setQuery] = useState('');
   const [results,setResults]=useState([])
-
+const date=new Date().getFullYear()
  const handleSearch=async()=>{
  try {
   const res=await fetch(`/api/posts/search?title=${query}`,{
@@ -64,6 +64,7 @@ console.log(results)
 
   return (
     <>
+      
     <Box width="50%" px="20px" my="10px" ml="30%">
       <InputGroup>
         <InputLeftElement pointerEvents="none">
@@ -109,7 +110,7 @@ console.log(results)
         />
       ))
     ) : (
-      <p>No search results available</p>
+      <p></p>
     )}
   </Flex>
 </Flex>
@@ -137,6 +138,12 @@ console.log(results)
     </Flex>
   </Flex>
 )}
+
+<Box  bg="gray.300"width={"100%"} height={"100px"} mb={"20px"}>
+
+<p className='footer'> {date} © All Rights Reserved</p>
+
+</Box>
 
     
     </>

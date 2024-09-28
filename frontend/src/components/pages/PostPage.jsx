@@ -1,4 +1,4 @@
-import { Flex, Heading, HStack, Image, Text, IconButton, VStack, Box } from '@chakra-ui/react';
+import { Flex, Heading, HStack, Image, Text, IconButton, Box } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
@@ -7,14 +7,19 @@ import userAtom from '../atoms/userAtom';
 import { useToast } from '@chakra-ui/react';
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { FaHeart } from 'react-icons/fa';
+import { FaRegComment } from "react-icons/fa6";
+import '../style.css'
 const PostPage = () => {
+  const date=new Date().getFullYear()
   const toast = useToast();
   const navigate = useNavigate();
   const user = useRecoilValue(userAtom);
   const userId = user.userId;
   const [post, setPost] = useState(null);
   const { postId } = useParams();
-
+const [likedInfo,setLikedInfo]=useState([])
+const [liked,setLiked]=useState(false)
   // Handle post editing
   const handleEdit = () => {
     navigate(`/editPost/${postId}`);
@@ -70,6 +75,43 @@ const PostPage = () => {
     day: 'numeric',
   });
 
+  const handleLike=async()=>{
+   try {
+    let alreadyLikedBool;
+    const res=await fetch(`/api/posts/like/${postId}`,{
+      method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({userId})
+    })
+    const data = await res.json()
+    console.log(data)
+    console.log(data.alreadyLiked)
+    if(data.alreadyLiked===1){
+     alreadyLikedBool=true
+    }else{
+      alreadyLikedBool=false
+    }
+    setLiked(alreadyLikedBool)
+    setLikedInfo(data)
+    
+  
+   } catch (error) {
+    console.log(error)
+    
+   }
+  }
+  //u need t o add del like in else of postcontroller to code hre!
+  useEffect(()=>{
+    if(likedInfo.alreadyLiked===1){
+      console.log(liked)
+      setLiked(liked)
+      console.log(liked)
+
+   }
+   else{
+    setLiked(false)
+   }
+   },[likedInfo,liked])
   return (
     <>
       {post ? (
@@ -116,6 +158,33 @@ const PostPage = () => {
           <Text fontSize="xl">This post has been removed or is no longer available.</Text>
         </Box>
       )}
+
+<Flex bg={''} ml="24%" flexDirection={"row"} gap="40px"  mt="10px">
+
+    <svg
+                    aria-label='Like'
+                   
+                     color={liked ? "rgb(237, 73, 86)" : ""} 
+                     fill={liked ? "rgb(237, 73, 86)" : "transparent"} 
+                    height='30'
+                    role='img'
+                    viewBox='0 0 24 22'
+                    width='30'
+                    onClick={handleLike}
+                >
+                    <path
+                        d='M1 7.66c0 4.575 3.899 9.086 9.987 12.934.338.203.74.406 1.013.406.283 0 .686-.203 1.013-.406C19.1 16.746 23 12.234 23 7.66 23 3.736 20.245 1 16.672 1 14.603 1 12.98 1.94 12 3.352 11.042 1.952 9.408 1 7.328 1 3.766 1 1 3.736 1 7.66Z'
+                        stroke='currentColor'
+                        strokeWidth='2'
+                    ></path>
+    </svg> 
+    <FaRegComment size="30" />
+</Flex>
+      <Box  bg="gray.300"width={"100%"} height={"100px"} mb={"5px"} mt="60px">
+
+      <p className='footer'> {date} © All Rights Reserved</p>
+      
+      </Box>
     </>
   );
 };

@@ -10,6 +10,10 @@
     font-style: normal;
     font-size:60px;
   }
+  .footer{
+    text-align: center;
+  padding: 30px;
+  }
   
   .tangerine-bold {
     font-family: "Tangerine", cursive;
