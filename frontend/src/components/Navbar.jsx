@@ -1,11 +1,11 @@
 import React from 'react'
-import { Container, Heading, Text ,Flex,Button,HStack,Spacer} from '@chakra-ui/react'
+import { Container, Heading, Text ,Flex,Button,HStack,Spacer, Divider} from '@chakra-ui/react'
 import { CgProfile } from "react-icons/cg";
 import { LuPlusSquare } from "react-icons/lu";
 import {useNavigate} from'react-router-dom';
 import { IoMdHome } from "react-icons/io";
 import blog from './blog.svg'
-
+import './style.css'
 
 const Navbar = () => {
   const navigate=useNavigate()
@@ -29,10 +29,26 @@ const handleHome=()=>{
 }
 
   return (
+    <>
     
-    <Flex as="nav"  p="10">
-      <Heading>Blog Daily</Heading>
-      <Spacer></Spacer>
+    < Flex as="nav"  mt={"10px"} alignItems={"center"} ml={"40%"}>
+       <h1 className='tangerine-regular .tangerine-bold' >
+      <Text as="span" color="pink">B</Text>
+      <Text as="span" color="black">log</Text>
+      <Text as="span" color="pink"> D</Text>
+      <Text as="span" color="black">aily</Text>
+    </h1>
+    </Flex>
+    <hr borderColor={"black"} borderWidth={"0.5px"} ></hr>
+    <Flex mt="10px" ml={"40%"}  gap="50px" mb={"10px"}>
+  <Text fontSize={"x-large"} className='categories' color="pink">Technology</Text>
+  <Text  fontSize={"x-large"}  className='categories' color="black">Science</Text>
+  <Text fontSize={"x-large"}  className='categories' color="black">Psychology</Text>
+</Flex>
+<hr ></hr>
+
+
+      {/* <Spacer></Spacer>
 
       <HStack gap='20px'>
        
@@ -44,9 +60,9 @@ const handleHome=()=>{
         
 
       </HStack>
+ */}
 
-
-    </Flex>
+    </>
     
   )
 }
