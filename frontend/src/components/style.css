@@ -13,3 +13,15 @@
   .categories {
     font-family: "Trirong", serif;
   }
+  .categories-bold {
+    font-family: "Trirong", serif;
+    font-weight: 600;
+    font-size:24px;
+
+  }
+  .tangerine-bold-title {
+    font-family: "Tangerine", cursive;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 50px;
+  }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex,Container, HStack ,Box,Heading} from '@chakra-ui/react'
+import { Flex,Container, HStack ,Box,Heading,Image} from '@chakra-ui/react'
 import { wrap } from 'framer-motion'
 import BlogCard from './BlogCard'
 import LatestPost from './LatestPost'
@@ -38,7 +38,7 @@ getFeed()
 
   return (
     <Flex flexBasis="960px" m="30px" bg=""   flexDirection={["column", "column", "row"]}  >
-     
+
        
        
      <Flex  bg=""  wrap={"wrap"}>
@@ -64,16 +64,7 @@ getFeed()
        <p>No posts awvilble</p>
        )}
      </Flex>
-       
-   
-        {/* <Flex bg="yellow.100" flexBasis={"400px"} ml="50px"  flexDirection={"column"}>
-        <Heading ml="60px">Popular posts</Heading>
-       
-           <LatestPost/>
-           <LatestPost/>
-
-           
-        </Flex> */}
+     
         
     </Flex>
   
