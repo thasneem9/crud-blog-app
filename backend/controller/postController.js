@@ -91,8 +91,20 @@ const getMyPosts=async(req,res)=>{
 }
 const displayPost=async(req,res)=>{
   
+    const token = req.cookies.jwt;
+    console.log("postttttttt token",token)
+    if (!token) {
+        return res.status(401).json({ error: "Unauthorized" });
+    }
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decodedToken.userId;
+
+    console.log("Decoded Token:", decodedToken);
+
+    console.log("Decoded User ID:", userId);
 
     const {postId}=req.params;
+    let likeExists=false;
     try {
         const post= await Post.findOne({
             where:{
@@ -100,11 +112,24 @@ const displayPost=async(req,res)=>{
                 
             }
         })
+        const existingLike = await Like.findOne({
+            where: { postId, userId },
+          });
+      
+          if (existingLike) {
+             likeExists=true
+        }
+            else{
+             likeExists=false
+            }
+            const likeCount = await Like.count({
+                where: { postId },
+              });
         if(!post){
             return res.status(404).json({message:"post not found"})
         }
         console.log("postttttt",post)
-        return res.status(200).json({message:"Post detai;sfetched sucesfully", post})
+        return res.status(200).json({message:"Post detai;sfetched sucesfully", post,likeExists,likeCount})
     } catch (error) {
         console.error("eror fetching post:",error);
         res.status(500).json({error:'internalserver error'});
@@ -173,28 +198,50 @@ const likePost=async(req,res)=>{
     const {userId}=req.body
     const {postId}=req.params;
     try {
+        const existingLike = await Like.findOne({
+            where: { postId, userId },
+          });
+      
+          if (existingLike) {
+            // If the user has already liked the post, remove the like
+            await Like.destroy({
+              where: { postId, userId },
+            });
+      
+            // Count total likes for the post after removing
+            const likeCount = await Like.count({
+              where: { postId },
+            });
+      
+            res.status(200).json({
+              message: 'Like removed successfully!',
+              likeCount,
+              alreadyLiked: false, // User has unliked the post
+            });
+          } else {
+            // If the user hasn't liked the post yet, add the like
+            await Like.create({ postId, userId });
+      
+            // Count total likes for the post after adding
+            const likeCount = await Like.count({
+              where: { postId },
+            });
+      
+            res.status(200).json({
+              message: 'Post liked successfully!',
+              likeCount,
+              alreadyLiked: true, // User has liked the post
+            });
+          }
         
-        const [like, created] = await Like.findOrCreate({
-          where: { postId, userId }
-        });
-         // Count total likes for the post
-    const likeCount = await Like.count({
-        where: { postId }
-      });
-      let alreadyLiked=1;//is true
-    
-        if (created) {
-          res.status(200).json({ message: 'Post liked successfully!',likeCount });
-          alreadyLiked=0//is false!
-        } else {
-            //else deleteeeee
-          res.status(200).json({ message: 'You have already liked this post.',likeCount,alreadyLiked });
-        }
+       
       } catch (error) {
         console.error('Error liking post:', error);
         res.status(500).json({ error: 'Internal Server Error' });
       }
 
 }
+
+
 
 export {createPost,getFeed,getMyPosts,displayPost,editPost,deletePost,searchPost,likePost}

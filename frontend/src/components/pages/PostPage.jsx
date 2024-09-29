@@ -18,8 +18,12 @@ const PostPage = () => {
   const userId = user.userId;
   const [post, setPost] = useState(null);
   const { postId } = useParams();
-const [likedInfo,setLikedInfo]=useState([])
+
+
+
+
 const [liked,setLiked]=useState(false)
+const [postData,setPostData]=useState(false)
   // Handle post editing
   const handleEdit = () => {
     navigate(`/editPost/${postId}`);
@@ -60,6 +64,15 @@ const [liked,setLiked]=useState(false)
         const data = await res.json();
         if (data) {
           setPost(data.post);
+        
+          setPostData(data)
+          console.log(data)
+          if(data.likeExists){
+            setLiked(true)
+
+          }else{
+            setLiked(false)
+          }
         }
       } catch (error) {
         console.error('Error fetching post details', error);
@@ -77,7 +90,7 @@ const [liked,setLiked]=useState(false)
 
   const handleLike=async()=>{
    try {
-    let alreadyLikedBool;
+  
     const res=await fetch(`/api/posts/like/${postId}`,{
       method:'POST',
     headers:{'Content-Type':'application/json'},
@@ -85,33 +98,28 @@ const [liked,setLiked]=useState(false)
     })
     const data = await res.json()
     console.log(data)
-    console.log(data.alreadyLiked)
-    if(data.alreadyLiked===1){
-     alreadyLikedBool=true
-    }else{
-      alreadyLikedBool=false
+    if (data.alreadyLiked) {
+      setLiked(true);  // Post has been liked
+    } else {
+      setLiked(false); // Post has been unliked
     }
-    setLiked(alreadyLikedBool)
-    setLikedInfo(data)
-    
-  
+
    } catch (error) {
     console.log(error)
     
    }
   }
-  //u need t o add del like in else of postcontroller to code hre!
-  useEffect(()=>{
-    if(likedInfo.alreadyLiked===1){
-      console.log(liked)
-      setLiked(liked)
-      console.log(liked)
 
-   }
-   else{
-    setLiked(false)
-   }
-   },[likedInfo,liked])
+
+  useEffect(() => {
+    if (postData && postData.likeExists !== undefined) {
+      setLiked(postData.likeExists);
+    }
+  }, [postData]);
+console.log(postData)
+  // Fetch like status on component mount
+
+
   return (
     <>
       {post ? (
@@ -160,7 +168,7 @@ const [liked,setLiked]=useState(false)
       )}
 
 <Flex bg={''} ml="24%" flexDirection={"row"} gap="40px"  mt="10px">
-
+<Flex flexDirection={'column'}>
     <svg
                     aria-label='Like'
                    
@@ -178,6 +186,8 @@ const [liked,setLiked]=useState(false)
                         strokeWidth='2'
                     ></path>
     </svg> 
+    <Text>{postData.likeCount} like</Text>
+    </Flex>
     <FaRegComment size="30" />
 </Flex>
       <Box  bg="gray.300"width={"100%"} height={"100px"} mb={"5px"} mt="60px">
