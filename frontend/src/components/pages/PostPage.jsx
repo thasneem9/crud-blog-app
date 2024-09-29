@@ -24,6 +24,7 @@ const PostPage = () => {
 
 const [liked,setLiked]=useState(false)
 const [postData,setPostData]=useState(false)
+const [count,setCount]=useState('')
   // Handle post editing
   const handleEdit = () => {
     navigate(`/editPost/${postId}`);
@@ -97,12 +98,15 @@ const [postData,setPostData]=useState(false)
     body:JSON.stringify({userId})
     })
     const data = await res.json()
-    console.log(data)
+   console.log(data)
     if (data.alreadyLiked) {
-      setLiked(true);  // Post has been liked
+      setLiked(true); 
+      setCount(data.likeCount) 
     } else {
-      setLiked(false); // Post has been unliked
-    }
+      setLiked(false); 
+      
+    } 
+    
 
    } catch (error) {
     console.log(error)
@@ -116,9 +120,9 @@ const [postData,setPostData]=useState(false)
       setLiked(postData.likeExists);
     }
   }, [postData]);
-console.log(postData)
-  // Fetch like status on component mount
-
+/* console.log(postData) */
+ 
+console.log()
 
   return (
     <>
@@ -168,7 +172,7 @@ console.log(postData)
       )}
 
 <Flex bg={''} ml="24%" flexDirection={"row"} gap="40px"  mt="10px">
-<Flex flexDirection={'column'}>
+
     <svg
                     aria-label='Like'
                    
@@ -186,8 +190,8 @@ console.log(postData)
                         strokeWidth='2'
                     ></path>
     </svg> 
-    <Text>{postData.likeCount} like</Text>
-    </Flex>
+   
+  
     <FaRegComment size="30" />
 </Flex>
       <Box  bg="gray.300"width={"100%"} height={"100px"} mb={"5px"} mt="60px">

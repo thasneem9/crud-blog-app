@@ -125,11 +125,12 @@ const displayPost=async(req,res)=>{
             const likeCount = await Like.count({
                 where: { postId },
               });
+              const likeCountPlusOne=likeCount+1
         if(!post){
             return res.status(404).json({message:"post not found"})
         }
         console.log("postttttt",post)
-        return res.status(200).json({message:"Post detai;sfetched sucesfully", post,likeExists,likeCount})
+        return res.status(200).json({message:"Post detai;sfetched sucesfully", post,likeExists,likeCountPlusOne})
     } catch (error) {
         console.error("eror fetching post:",error);
         res.status(500).json({error:'internalserver error'});
