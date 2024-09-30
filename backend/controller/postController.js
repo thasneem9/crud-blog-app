@@ -262,6 +262,21 @@ const fetchCategories=async(req,res)=>{
   };
         
    
+const getCategoryPosts=async(req,res)=>{
+  try {
+    const {categoryName}=req.params;
+  const posts=await Post.findAll({
+    where:{category:categoryName}
+  })
+   // Send the fetched posts in the response
+   res.status(200).json({message:"categoryposts>>",posts});
+  } catch (error) {
+    console.error("Error fetching posts by category:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 
-export {createPost,getFeed,getMyPosts,displayPost,editPost,deletePost,searchPost,likePost,fetchCategories}
+
+
+export {createPost,getFeed,getMyPosts,displayPost,editPost,deletePost,searchPost,likePost,fetchCategories,getCategoryPosts}

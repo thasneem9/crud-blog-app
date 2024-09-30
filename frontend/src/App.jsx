@@ -27,7 +27,7 @@ function App() {
     <Route path='/post/:postId' element={<PostPage />}/>
     <Route path='/editPost/:postId' element={<EditPostPage />}/>
     <Route path='/editProfile' element={<EditProfile />}/>
-    <Route path='/categoryPage' element={<CategoryPage />}/>
+    <Route path='/category/:categoryName' element={<CategoryPage />}/>
     </Routes>
 
     </>

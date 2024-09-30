@@ -33,8 +33,8 @@ const handleHome=()=>{
   navigate('/')
 }
 
-const handleCategoryNavigate=()=>{
-  navigate(`/category/:${name}`)
+const handleCategoryNavigate=(categoryName)=>{
+  navigate(`/category/${categoryName}`)
 }
 
 
@@ -82,9 +82,9 @@ const handleCategoryNavigate=()=>{
 
     <HStack gap={"400px"}>
     <Flex mt="10px" ml={"35%"}  gap="50px" mb={"10px"}>
-  <Text fontSize={"x-large"} className='categories' color="pink" onClick={()=>{handleCategoryx(category.tech)}}>Technology</Text>
-  <Text  fontSize={"x-large"}  className='categories' color="black" onClick={()=>{handleCategoryx(category.science)}} >Science</Text>
-  <Text fontSize={"x-large"}  className='categories' color="black" onClick={()=>{handleCategoryx(category.psych)}}   _focus={{ outline: "none" }}>Psychology</Text>
+  <Text fontSize={"x-large"} className='categories' color="pink" onClick={() => handleCategoryNavigate("Technology")}>Technology</Text>
+  <Text  fontSize={"x-large"}  className='categories' color="black" onClick={() => handleCategoryNavigate("Science")} >Science</Text>
+  <Text fontSize={"x-large"}  className='categories' color="black" onClick={() => handleCategoryNavigate("Psychology")}  _focus={{ outline: "none" }}>Psychology</Text>
   <Menu>
           <MenuButton as={Text} fontSize={"x-large"} color="black" onClick={fetchCategories}   _focus={{ outline: "none" }} className='categories' >
             More
