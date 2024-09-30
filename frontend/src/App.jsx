@@ -8,6 +8,8 @@ import MyEditor from './components/MyEditor.jsx'
 import PostPage from './components/pages/PostPage.jsx'
 import EditProfile from './components/pages/EditProfile.jsx'
 import EditPostPage from './components/pages/EditPostPage.jsx'
+import CategoryPage from './components/pages/CategoryPage.jsx'
+
 function App() {
   const { isAuthenticated } = useAuth();
   return (
@@ -25,6 +27,7 @@ function App() {
     <Route path='/post/:postId' element={<PostPage />}/>
     <Route path='/editPost/:postId' element={<EditPostPage />}/>
     <Route path='/editProfile' element={<EditProfile />}/>
+    <Route path='/categoryPage' element={<CategoryPage />}/>
     </Routes>
 
     </>

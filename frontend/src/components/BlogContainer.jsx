@@ -7,6 +7,8 @@ import { useState,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {  Input, InputGroup, InputLeftElement, IconButton } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
+
+
 const BlogContainer = () => {
   const [posts,setPosts]=useState([])
   const [query, setQuery] = useState('');

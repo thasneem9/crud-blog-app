@@ -243,6 +243,25 @@ const likePost=async(req,res)=>{
 
 }
 
+const fetchCategories=async(req,res)=>{
+    //function to fetch all the values under the categor  table in Posts table
+    try {
+          // Fetch all distinct categories from the Post table
+    const categories = await Post.findAll({
+        attributes: [
+          [sequelize.fn('DISTINCT', sequelize.col('category')), 'category']
+        ]
+      });
+  
+      // Return the list of categories as a response
+      res.status(200).json({ message: "fetched categories:", categories });
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      res.status(500).json({ success: false, error: 'Server Error' });
+    }
+  };
+        
+   
 
 
-export {createPost,getFeed,getMyPosts,displayPost,editPost,deletePost,searchPost,likePost}
+export {createPost,getFeed,getMyPosts,displayPost,editPost,deletePost,searchPost,likePost,fetchCategories}
