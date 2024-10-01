@@ -18,7 +18,8 @@ try {
         name:dataReceived.name,
         email:dataReceived.email,
         username:dataReceived.username,
-        password:hashedPassword
+        password:hashedPassword,
+    
 
     })
   
@@ -36,7 +37,7 @@ try {
     
 } catch (error) {
     res.status(400).json({ error});
-
+console.log(error)
     
 }
 

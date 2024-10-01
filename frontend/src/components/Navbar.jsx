@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 
+
 const Navbar = () => {
   const navigate=useNavigate()
 
@@ -80,13 +81,45 @@ const handleCategoryNavigate=(categoryName)=>{
     <hr borderColor={"black"} borderWidth={"0.5px"} ></hr>
 
 
-    <HStack gap={"400px"}>
-    <Flex mt="10px" ml={"35%"}  gap="50px" mb={"10px"}>
-  <Text fontSize={"x-large"} className='categories' color="pink" onClick={() => handleCategoryNavigate("Technology")}>Technology</Text>
-  <Text  fontSize={"x-large"}  className='categories' color="black" onClick={() => handleCategoryNavigate("Science")} >Science</Text>
-  <Text fontSize={"x-large"}  className='categories' color="black" onClick={() => handleCategoryNavigate("Psychology")}  _focus={{ outline: "none" }}>Psychology</Text>
+    <HStack gap={"60px"}>
+  <Flex mt="10px" ml={"30%"} gap="50px" mb={"10px"} _focus={{ outline: "none" }}>
+    <Text 
+      fontSize={"x-large"} 
+      className='categories' 
+      color="pink" 
+      onClick={() => handleCategoryNavigate("Technology")} 
+      _focus={{ outline: "none" }} 
+      tabIndex={-1} 
+      userSelect="none"   // Prevent text selection and blinking cursor
+    >
+      Technology
+    </Text>
+    <Text 
+      fontSize={"x-large"} 
+      className='categories' 
+      color="black" 
+      onClick={() => handleCategoryNavigate("Science")} 
+      _focus={{ outline: "none" }} 
+      tabIndex={-1} 
+      userSelect="none"   // Prevent text selection and blinking cursor
+    >
+      Science
+    </Text>
+    <Text 
+      fontSize={"x-large"} 
+      className='categories' 
+      color="black" 
+      onClick={() => handleCategoryNavigate("Psychology")} 
+      _focus={{ outline: "none" }} 
+      tabIndex={-1} 
+      userSelect="none"   // Prevent text selection and blinking cursor
+    >
+      Psychology
+    </Text>
   <Menu>
-          <MenuButton as={Text} fontSize={"x-large"} color="black" onClick={fetchCategories}   _focus={{ outline: "none" }} className='categories' >
+          <MenuButton as={Text} fontSize={"x-large"} color="black" onClick={fetchCategories}   _focus={{ outline: "none" }} className='categories'  _focus={{ outline: "none" }} 
+      tabIndex={-1} 
+      userSelect="none" >
             More
            
           </MenuButton>
@@ -107,13 +140,14 @@ const handleCategoryNavigate=(categoryName)=>{
 
 
 <Menu>
-      <MenuButton as={GiHamburgerMenu }  size="30px"  icon={<HamburgerIcon />} ml={"40%"} color={"pink"} bg=""/>
-      <MenuList ml={"1200px"} mt={"200px"}>
+      <MenuButton as={GiHamburgerMenu }  size="30px"  icon={<HamburgerIcon />} mr={"30%"} color={"pink"} bg=""/>
+      <MenuList ml={"1100px"} mt={"200px"}>
         <MenuItem className='categories'  onClick={handleHome}>Home</MenuItem>
         <MenuItem className='categories'>Categories</MenuItem>
         <MenuItem className='categories' onClick={handleNavigate} >Login/Signup</MenuItem>
         <MenuItem className='categories' onClick={handleProfileEdit}>Profile</MenuItem>
         <MenuItem  className='categories' onClick={handleBlog}>Your Posts</MenuItem>
+        <MenuItem  className='categories' onClick={handleBlog}>Liked posts</MenuItem>
       </MenuList>
     </Menu>
     </HStack>

@@ -38,9 +38,9 @@ useEffect(()=>{
   return (
     <>
    <Flex flexDirection={"column"} >
-    <Heading ml="40%">
+    <h1 ml="40%" className='categories'style={{fontSize:"40px", textAlign:"center",padding:"20px"}}  >
 My Posts
-    </Heading>
+    </h1>
 
     
     <Flex flexDirection={"row"}  wrap={"wrap"}>
@@ -59,7 +59,7 @@ My Posts
 
       />
     ))
-   ):(<p>You dont Have any posts to display</p>)}
+   ):(<p className='categories' style={{fontSize:"30px", textAlign:"center",padding:"20px"}} >Create some posts to display..</p>)}
     </Flex>
    
 

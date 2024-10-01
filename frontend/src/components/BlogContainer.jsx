@@ -91,12 +91,12 @@ console.log(results)
         />
       </InputGroup>
     </Box>
-    <Flex w="100%" justify="space-between" align="center">
+    <Flex w="100%" justify="space-between" align="center" >
   <Text className='categories-recent' ml="90">Recent posts</Text>
   <Divider flex="1" ml={10} mr={10} />
 </Flex>
-<Flex flexBasis="960px" m="30px" bg="" flexDirection={["column", "column", "row"]}>
-  <Flex bg="" wrap={"wrap"}>
+<Flex flexBasis="960px" m="30px"  bg="" flexDirection={["column", "column", "row"]}>
+  <Flex bg="" wrap={"wrap"} >
     {results?.length > 0 ? (
       results.map((result) => (
         <BlogCard 
